@@ -44,4 +44,19 @@ class FirstController extends Controller
         //dd(compact('produtos','title')); para debugar 
         return view('produtos_params', compact('produtos','title'));//cria uma array com as variaveis
     }
+
+    public function produtosInfo($index=null){
+        $produtos = [
+            ['id'=> 110, 'name'=>'Computador', 'description'=> 'Descriotion about Computador'],
+            ['id'=> 120, 'name'=>'Monitor',    'description'=> 'Descriotion about Monitor'],
+            ['id'=> 130, 'name'=>'Printer',    'description'=> 'Descriotion about Printer'],
+            ['id'=> 140, 'name'=>'Keyboard',   'description'=> 'Descriotion about Keyboard']
+        ];
+        $title = 'Relatorio - Todos Produtos';
+        $selecionado=(($index!=null)&&($index < count($produtos))) ? $produtos[$index] : null;
+        //selecionado recebe se o teste de index e menor q total de prudutos 
+        //caso sim vai receber produto na posicao index caso nao vazio
+        return view('produtosInfo', compact(['produtos','title','selecionado']));
+    }
+
 }

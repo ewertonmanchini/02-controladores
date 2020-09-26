@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\FirstController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,3 +22,5 @@ Route::get('/', function () {
 Route::get('/', [FirstController::class,'produtos']);
 Route::get('/produtos', [FirstController::class,'produtosView']);
 Route::get('/produtos/view_params', [FirstController::class,'produtosViewParams']);
+Route::get('/produtos/info/{index?}', [FirstController::class,'produtosInfo'])->name('produtosInfo');
+Route::resource('/clientes', ClienteController::class);
