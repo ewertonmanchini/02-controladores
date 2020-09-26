@@ -5,3 +5,4 @@
     <input type="text" name="name">
     <input type="submit" value="Salvar">
 </form>
+<a href="{{ route('clientes.index') }}">Voltar</a>

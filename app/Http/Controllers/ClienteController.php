@@ -59,7 +59,10 @@ class ClienteController extends Controller
      */
     public function show($id)
     {
-        //
+        $clientes = session('clientes', $this->clientes); //leitura da sessao
+        $idx = $this->getIndex($id, $clientes);
+        $client = $clientes[$idx];
+        return view('clientes.show',compact('client'));
     }
 
     /**
@@ -70,7 +73,10 @@ class ClienteController extends Controller
      */
     public function edit($id)
     {
-        //
+        $clientes = session('clientes', $this->clientes); //leitura da sessao
+        $idx = $this->getIndex($id, $clientes);
+        $client = $clientes[$idx];
+        return view('clientes.edit',compact('client'));
     }
 
     /**
@@ -82,7 +88,11 @@ class ClienteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $clientes = session('clientes', $this->clientes); //leitura da sessao
+        $idx = $this->getIndex($id, $clientes);
+        $clientes[$idx]['name'] = $request->name;
+        session(['clientes'=> $clientes]); //grava array clientes ja com a alteração
+        return redirect()->route('clientes.index');//apos salvar rediciona para index
     }
 
     /**
@@ -93,6 +103,17 @@ class ClienteController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $clientes = session('clientes', $this->clientes); //leitura da sessao
+        $idx = $this->getIndex($id, $clientes);
+        array_splice($clientes, $idx, 1);
+        // array clientes nao posicao idx vai remor 1
+        session(['clientes'=> $clientes]); //grava array clientes ja com a alteração
+        return redirect()->route('clientes.index');//apos salvar rediciona para index
+    }
+
+    private function getIndex($id, $cliente){
+        $ids = array_column($cliente, 'id'); //retorna so a coluna de id
+        $index =  array_search($id, $ids); //retorna o indice do id procurando dentro do array ids
+        return $index;
     }
 }
